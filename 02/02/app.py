@@ -17,6 +17,11 @@
 
 
 import logging
+import json
+import os
+
+from consts import DATA_DIR
+
 log = logging.getLogger()
 
 
@@ -43,30 +48,21 @@ class BreukhList(list):
         print(f"Ma liste de '{self.name}' :")
         for element in self:
             print(f"- {element}")
-
-        
+    def sauvegarder(self):
+        chemin = os.path.join(DATA_DIR,f"{self.name}.json")
+        if not os.path.exists(DATA_DIR):
+            os.makedirs(DATA_DIR)
+        with open(chemin,"w") as f:
+            json.dump(self,f,indent=4)
+        return True
 
     
 
-l1 =BreukhList('Course')
-l1.ajouter("Acheter des mangues")
-l1.afficher()
+l1 =BreukhList('A faire')
+# l1.ajouter("8h: Aller a l'ecole")
+# l1.ajouter("12h: Faire mes devoirs")
+# l1.ajouter("15h: Dormir un peu")
+# l1.ajouter("17h: Aller au sport")
 
-l = BreukhList("Liste de personne")
-
-
-
-
-if(l.ajouter("toto")==True):
-    print("ajouer ok") 
-
-l.ajouter("titi") 
-l.ajouter("tata") 
-# l.ajouter(34)
-# l.ajouter(["titi"])
-
-l.afficher()
-
-l.enlever("titi")
-
-l.afficher()
+l1.ajouter("20h: Aller dormir")
+l1.sauvegarder()
